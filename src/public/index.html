@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tatsumi Client</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+</head>
+
+<body>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="#">Tatsumi Client</a>
+        </div>
+    </nav>
+    <div id="app" class="container mt-5">
+        <table class="table table-dark table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Card</th>
+                    <th scope="col">Name</th>
+                    <th scope="col">Position</th>
+                    <th scope="col">last date</th>
+                    <th scope="col">History</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr v-for="(item, index) in data">
+                    <th>{{item.numberCard}}</th>
+                    <td>{{item.employee.name}}</td>
+                    <td>{{item.employee.position}}</td>
+                    <td>
+                        <div v-if="item.history.length==0">
+                            no entry log
+                        </div>
+                        <div v-else>
+                            {{item.history[(item.history.length-1)]}}
+                        </div>
+                    </td>
+                    <td>
+                        <div class="w-100 d-flex">
+                            <button v-on:click="setHistoryModal(item.history)" class="btn btn-outline-info"
+                                data-bs-toggle="modal" data-bs-target="#exampleModal">see</button>
+                        </div>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-scrollable">
+                <div class="modal-content text-white bg-dark">
+                    <div class="modal-header border-0">
+                        History entry logs
+                        <button type="button" class="btn-close text-white" data-bs-dismiss="modal"
+                            aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div v-for="(item, index) in historyModal" class="alert alert-dark" role="alert mb-2">
+                            {{item}}
+                        </div>
+                        <div v-if="historyModal.length==0">
+                            no entry logs
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.25.0/axios.min.js"
+        integrity="sha512-/Q6t3CASm04EliI1QyIDAA/nDo9R8FQ/BULoUFyN4n/BDdyIxeH7u++Z+eobdmr11gG5D/6nPFyDlnisDwhpYA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="./app/index.js"></script>
+</body>
+
+</html>
